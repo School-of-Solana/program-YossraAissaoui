@@ -1,0 +1,473 @@
+{
+  "address": "HxVoBJzahftigU7oqNEzRGtjs1k245MBkPjs2y8yHKzR",
+  "metadata": {
+    "name": "birthday_invite",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "Created with Anchor"
+  },
+  "instructions": [
+    {
+      "name": "add_comment",
+      "discriminator": [
+        59,
+        175,
+        193,
+        236,
+        134,
+        214,
+        75,
+        141
+      ],
+      "accounts": [
+        {
+          "name": "author",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "birthday_event",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "arg",
+                "path": "event_name"
+              },
+              {
+                "kind": "const",
+                "value": [
+                  69,
+                  86,
+                  69,
+                  78,
+                  84,
+                  95,
+                  83,
+                  69,
+                  69,
+                  68
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "birthday_event.creator",
+                "account": "BirthdayEvent"
+              }
+            ]
+          }
+        }
+      ],
+      "args": [
+        {
+          "name": "event_name",
+          "type": "string"
+        },
+        {
+          "name": "comment_text",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "confirm_attendance",
+      "discriminator": [
+        208,
+        43,
+        38,
+        19,
+        111,
+        19,
+        108,
+        50
+      ],
+      "accounts": [
+        {
+          "name": "signer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "birthday_event",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "arg",
+                "path": "event_name"
+              },
+              {
+                "kind": "const",
+                "value": [
+                  69,
+                  86,
+                  69,
+                  78,
+                  84,
+                  95,
+                  83,
+                  69,
+                  69,
+                  68
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "birthday_event.creator",
+                "account": "BirthdayEvent"
+              }
+            ]
+          }
+        }
+      ],
+      "args": [
+        {
+          "name": "event_name",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "decline_attendance",
+      "discriminator": [
+        233,
+        165,
+        218,
+        225,
+        86,
+        144,
+        14,
+        218
+      ],
+      "accounts": [
+        {
+          "name": "signer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "birthday_event",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "arg",
+                "path": "event_name"
+              },
+              {
+                "kind": "const",
+                "value": [
+                  69,
+                  86,
+                  69,
+                  78,
+                  84,
+                  95,
+                  83,
+                  69,
+                  69,
+                  68
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "birthday_event.creator",
+                "account": "BirthdayEvent"
+              }
+            ]
+          }
+        }
+      ],
+      "args": [
+        {
+          "name": "event_name",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "initialize_bday_event",
+      "discriminator": [
+        248,
+        90,
+        104,
+        59,
+        41,
+        51,
+        220,
+        113
+      ],
+      "accounts": [
+        {
+          "name": "creator",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "birthday_event",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "arg",
+                "path": "event_name"
+              },
+              {
+                "kind": "const",
+                "value": [
+                  69,
+                  86,
+                  69,
+                  78,
+                  84,
+                  95,
+                  83,
+                  69,
+                  69,
+                  68
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "creator"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "event_name",
+          "type": "string"
+        },
+        {
+          "name": "event_date",
+          "type": "i64"
+        }
+      ]
+    },
+    {
+      "name": "remove_comment",
+      "discriminator": [
+        163,
+        33,
+        247,
+        159,
+        142,
+        140,
+        137,
+        109
+      ],
+      "accounts": [
+        {
+          "name": "author",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "birthday_event",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "arg",
+                "path": "event_name"
+              },
+              {
+                "kind": "const",
+                "value": [
+                  69,
+                  86,
+                  69,
+                  78,
+                  84,
+                  95,
+                  83,
+                  69,
+                  69,
+                  68
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "birthday_event.creator",
+                "account": "BirthdayEvent"
+              }
+            ]
+          }
+        }
+      ],
+      "args": [
+        {
+          "name": "event_name",
+          "type": "string"
+        },
+        {
+          "name": "comment_id",
+          "type": "u64"
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "BirthdayEvent",
+      "discriminator": [
+        100,
+        98,
+        11,
+        17,
+        68,
+        35,
+        111,
+        17
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "InvalidEventName",
+      "msg": "Event name must be 1-32 bytes"
+    },
+    {
+      "code": 6001,
+      "name": "PastDateNotAllowed",
+      "msg": "Event date must be in the future"
+    },
+    {
+      "code": 6002,
+      "name": "EventPassed",
+      "msg": "Event has already passed"
+    },
+    {
+      "code": 6003,
+      "name": "TooManyRSVPs",
+      "msg": "Maximum 5 RSVPs allowed for this event"
+    },
+    {
+      "code": 6004,
+      "name": "TooManyComments",
+      "msg": "Maximum 5 comments allowed for this event"
+    },
+    {
+      "code": 6005,
+      "name": "InvalidComment",
+      "msg": "Comment content must be 1-500 bytes"
+    },
+    {
+      "code": 6006,
+      "name": "Unauthorized",
+      "msg": "Only comment author can delete"
+    },
+    {
+      "code": 6007,
+      "name": "CommentNotFound",
+      "msg": "Comment not found"
+    },
+    {
+      "code": 6008,
+      "name": "EventNotFound",
+      "msg": "Event not found"
+    },
+    {
+      "code": 6009,
+      "name": "InvalidDate",
+      "msg": "Invalid date format"
+    }
+  ],
+  "types": [
+    {
+      "name": "BirthdayEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "creator",
+            "type": "pubkey"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "event_name",
+            "type": "string"
+          },
+          {
+            "name": "event_date",
+            "type": "i64"
+          },
+          {
+            "name": "coming_count",
+            "type": "u32"
+          },
+          {
+            "name": "busy_count",
+            "type": "u32"
+          },
+          {
+            "name": "rsvps",
+            "type": {
+              "vec": {
+                "defined": {
+                  "name": "RSVP"
+                }
+              }
+            }
+          },
+          {
+            "name": "comments",
+            "type": {
+              "vec": {
+                "defined": {
+                  "name": "Comment"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Comment",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "comment_author",
+            "type": "pubkey"
+          },
+          {
+            "name": "comment_id",
+            "type": "u64"
+          },
+          {
+            "name": "content",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "name": "RSVP",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "invited_person",
+            "type": "pubkey"
+          },
+          {
+            "name": "is_coming",
+            "type": "bool"
+          }
+        ]
+      }
+    }
+  ]
+}
