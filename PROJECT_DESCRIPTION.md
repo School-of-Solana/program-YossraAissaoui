@@ -1,28 +1,34 @@
 # Project Description
 
-**Deployed Frontend URL:** [TODO: Link to your deployed frontend]
-
-**Solana Program ID:** [TODO: Your deployed program's public key]
+**Deployed Frontend URL:** invitemeifyouwant.netlify.app
+ps: it is working nicely in localhost but i had issue in deploying w/ vercel (eslint errors TT)
+**Solana Program ID:** FLf5wn4AFa6ssQAhVYHjkEwoTyJPi7UQ7gZnv5jEWUJM
 
 ## Project Overview
 
 ### Description
-[TODO: Provide a comprehensive description of your dApp. Explain what it does. Be detailed about the core functionality.]
+Birthdayinvite is a decentralized application build on solana to enable users to create their own birthday events on-chain and confirm attendance of their invited friends. 
+Any user could connect his phantom wallet create event and interact with the selected event by increment coming button or busy button and add comments.
+This dApp demonstrates basic Solana program development concepts including PDAs, account creation, and state management.
+
 
 ### Key Features
-[TODO: List the main features of your dApp. Be specific about what users can do.]
 
-- Feature 1: [Description]
-- Feature 2: [Description]
-- ...
+- Create Birthday Event: Initialize a new birthday event account for your wallet
+- Confirm Attendance: Add 1 to your coming or busy friends counting
+- Decline Attendance: Set your attendace back by -1
+- Add Comment: Write your comment that is related to a selected event
+- Delete Comment: Remove your comment
+- View Events: Display all events and comments with owner and current coming/busy friends counting value
   
 ### How to Use the dApp
-[TODO: Provide step-by-step instructions for users to interact with your dApp]
 
 1. **Connect Wallet**
-2. **Main Action 1:** [Step-by-step instructions]
-3. **Main Action 2:** [Step-by-step instructions]
-4. ...
+2. **Start:** Click on Get Started →
+3. **Create a Birthday Event:** Fill up the form, the event name and date, then Click on Create Event
+4. **Approve the transaction with your Wallet** 
+5. **View Created Event:** The event appears on the screen with: Event name and date and owner 
+6. **RSVP:** 
 
 ## Program Architecture
 [TODO: Describe your Solana program's architecture. Explain the main instructions, account structures, and data flow.]
