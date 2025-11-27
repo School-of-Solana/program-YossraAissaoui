@@ -1,8 +1,9 @@
 # Project Description
 
-**Deployed Frontend URL:** invitemeifyouwant.netlify.app
-ps: it is working nicely in localhost but i had issue in deploying w/ vercel (eslint errors TT)
-**Solana Program ID:** FLf5wn4AFa6ssQAhVYHjkEwoTyJPi7UQ7gZnv5jEWUJM
+**Deployed Frontend URL:** [Birthday Events Creator](https://invitemeifyouwant.netlify.app)
+- ps: it is working nicely in localhost but i had pb in deploying w/ vercel (eslint errors TT)
+  
+**Solana Program ID:** `FLf5wn4AFa6ssQAhVYHjkEwoTyJPi7UQ7gZnv5jEWUJM`
 
 ## Project Overview
 
@@ -27,11 +28,30 @@ This dApp demonstrates basic Solana program development concepts including PDAs,
 2. **Start:** Click on Get Started →
 3. **Create a Birthday Event:** Fill up the form, the event name and date, then Click on Create Event
 4. **Approve the transaction with your Wallet** 
-5. **View Created Event:** The event appears on the screen with: Event name and date and owner 
-6. **RSVP:** 
+5. **View Created Event:** The event appears on the screen with: 
+   - Event name and date and owner 
+   - RSVP Buttons (I'm Coming / I'm Busy) 
+   - Comment Section (empty initially) 
+   - Counters showing 0 coming, 0 busy
+6. **RSVP: "Coming"** Click the "I'm Coming" button and approve with your wallet and you will see "Coming" counter increments to 1
+7. **RSVP: "Busy"** Click the "I'm Busy" button and approve with your wallet and you will see "Coming" counter decrements to 0 and "Busy" counter increments to 1
+8. **Add a Comment:** Scroll down to comments section write a comment and click "Send" button then approve with your wallet, you will see comments with their owners wallet address
+9. **Delete a Comment:** Click the "Delete" button on one of your comments and approve the transaction in your wallet
 
 ## Program Architecture
-[TODO: Describe your Solana program's architecture. Explain the main instructions, account structures, and data flow.]
+```
+programs/birthday-invite/src/
+├── lib.rs              # Program entry point and instruction routing
+├── state.rs            # Note account structure definition
+├── errors.rs           # Custom error types
+└── instructions/
+    ├── mod.rs                   # Instruction module exports
+    ├── add_comment.rs           # Comment creation logic
+    ├── confirm_attendance.rs.   # Vote on RSVP (Coming) logic
+    ├── decline_attendance.rs    # Switch from confirmed (Coming) to declined (Busy) logic
+    ├── initialize_bday_event.rs # Event creation logic
+    └── remove_comment.rs        # Comment deletion logic
+```
 
 ### PDA Usage
 [TODO: Explain how you implemented Program Derived Addresses (PDAs) in your project. What seeds do you use and why?]
