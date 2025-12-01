@@ -54,52 +54,134 @@ programs/birthday-invite/src/
 ```
 
 ### PDA Usage
-[TODO: Explain how you implemented Program Derived Addresses (PDAs) in your project. What seeds do you use and why?]
+The program uses Program Derived Addresses (PDAs) to create deterministic BirthdayEvent accounts for each user. The seed used is the `EVENT_SEED`.
 
 **PDAs Used:**
-- PDA 1: [Purpose and description]
-- PDA 2: [Purpose and description]
+- **Birthday Event PDA**: Derived using the event name, the seed `"EVENT_SEED"`, and the creator's public key. This ensures each creator can have uniquely named events while maintaining deterministic addressing. The PDA stores the complete event state including:
+  - Event metadata (name, date, creator)
+  - RSVP tracking (coming/busy counts and individual RSVP records)
+  - Comment thread (up to 5 comments per event)
+  - Bump seed for PDA derivation
 
 ### Program Instructions
-[TODO: List and describe all the instructions in your Solana program]
+The birthday invite program implements several instructions for managing birthday events and guests/users interactions.
 
 **Instructions Implemented:**
-- Instruction 1: [Description of what it does]
-- Instruction 2: [Description of what it does]
-- ...
+- initialize_bday_event: Creates a new birthday event with name and date. Initializes with zero RSVPs and empty comment list.
+
+- confirm_attendance: Allows guests to RSVP as "coming". Sets `is_coming: true` and increments `coming_count`.
+
+- decline_attendance: Allows guests to RSVP as "busy". Sets `is_coming: false` and updates counts accordingly.
+
+- add_comment: Enables guests to post comments (max 500 chars). Stores author, content, and unique ID. Limit: 5 comments per event.
+
+- remove_comment: Allows authors to delete their own comments. Verifies ownership before removal.
+  
 
 ### Account Structure
-[TODO: Describe your main account structures and their purposes]
+
 
 ```rust
-// Example account structure (replace with your actual structs)
 #[account]
-pub struct YourAccountName {
-    // Describe each field
+pub struct BirthdayEvent {
+    pub creator: Pubkey,         // The Address of the event owner
+    pub bump: u8,                // PDA bump
+    #[max_len(32)]               // Max 32 bytes for event name
+    pub event_name: String,      // The name of the created event 
+    pub event_date: i64,         // The date of the created event stored in unix timestamp
+    pub coming_count: u32,       // The counting of the guests who voted on coming
+    pub busy_count: u32,         // The counting of the guests who voted on busy
+    #[max_len(5)]                // Max of 5 RSVP
+    pub rsvps: Vec<RSVP>,        // List of tracked RSVP
+    #[max_len(5)]                // Max 5 comments per event
+    pub comments: Vec<Comment>,  // List of all comments
+}
+```
+
+### Nested Structures:
+```rust
+pub struct RSVP {
+    pub invited_person: Pubkey,  // Guest's public key
+    pub is_coming: bool,         // true = Coming, false = Busy
+}
+
+pub struct Comment {
+    pub comment_author: Pubkey,  // Comment author's public key
+    pub comment_id: u64,         // Unique identifier for the comment
+    #[max_len(500)].             // Max 500 characters in one comment
+    pub content: String,         // Comment text
 }
 ```
 
 ## Testing
 
 ### Test Coverage
-[TODO: Describe your testing approach and what scenarios you covered]
+The test suite covers the core functionality of the birthday invite program, including event creation, RSVP management, and comment interactions. Tests are written using Anchor's testing framework with Mocha and Chai assertions.
 
 **Happy Path Tests:**
-- Test 1: [Description]
-- Test 2: [Description]
-- ...
+- **Test 1: Create Birthday Event** - Verifies that a creator can successfully initialize a birthday event with a name and future date. Confirms the event account is created with correct initial values (event name, creator public key, and zero RSVP counts).
 
-**Unhappy Path Tests:**
-- Test 1: [Description of error scenario]
-- Test 2: [Description of error scenario]
-- ...
+- **Test 2: RSVP Coming** - Tests that a guest can confirm their attendance to an event. Validates that the `comingCount` increments correctly when a guest RSVPs as "coming".
+
+- **Test 3: RSVP Toggle (Coming → Busy)** - Ensures guests can change their RSVP status from "coming" to "busy". Verifies that `comingCount` decrements and `busyCount` increments appropriately.
+
+- **Test 4: Add Comment** - Confirms that guests can add comments to birthday events. Checks that the comment is stored with correct content and author information.
+
+- **Test 5: Remove Comment** - Tests that comment authors can successfully delete their own comments from events. Validates that the comment count decreases after removal.
+
+- **Test 6: Multiple Guests RSVP** - Verifies that multiple different guests can independently RSVP to the same event, ensuring the system handles concurrent attendees correctly.
+
+
+**Unhappy Path Tests:** 
+
+I will Consider adding tests for future enhancements but now they are not included in tests/birthday-invite.ts file:
+- Test 1: Invalid event dates
+- Test 2: Event name validation and edge cases
+- Test 3: Duplicate RSVP handling
+- Test 4: Unauthorized comment deletion attempts
+
+-> For now, the test suite contains 6 tests in total, all passing.
+
 
 ### Running Tests
 ```bash
+# Navigate to anchor project
+cd anchor_project
+cd birthday-invite
+
 # Commands to run your tests
-anchor test
+yarn install    # install dependencies
+anchor test    # run tests
+
+# Expected output: 6 passing tests
 ```
 
 ### Additional Notes for Evaluators
 
-[TODO: Add any specific notes or context that would help evaluators understand your project better]
+**Frontend Implementation:**
+
+- Built with Next.js/React + TypeScript + Tailwind + Solana web3.js
+- Uses @solana/wallet-adapter-react for wallet connections
+- Real-time updates after each transaction
+
+**Running Frontend Locally**
+```bash
+# Navigate to frontend directory
+cd frontend
+cd birthday-invite-frontend
+
+# Install dependencies and run
+npm install    # Install dependencies
+npm run dev    # Run development server
+
+# Navigate to http://localhost:3000/ in your browser to interact with the dApp.
+```
+
+**Deployment:**
+
+- Program deployed on Solana Devnet (you can airdrop 5 Sol to your account, using solana faucet: https://solfaucet.com/ )
+- Program ID: `FLf5wn4AFa6ssQAhVYHjkEwoTyJPi7UQ7gZnv5jEWUJM`
+- Codama was not used for client generation, so i used Anchor's native TypeScript client (`@coral-xyz/anchor`)
+- IDL located at: `target/idl/birthday_invite.json` and made a copy for the frontend at: `src/idl/birthday_invite.json`
+- Frontend hosted originally on Vercel but failed to deploy (i will update the link above as soon as it works)
+- All source code available in repository
